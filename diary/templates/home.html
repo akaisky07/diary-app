@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diary Entries</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: purple;
+            font-size:50px;
+        }
+        h3 {
+            color: purple;
+            font-size:30px;
+            margin-bottom:5px;
+        }
+        h4 {
+            font-size:12px;
+            font-style:none;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            font-size:25px;
+        }
+        li {
+            background-color: #E6E6FA;
+            margin-bottom: 8px;
+            padding: 2px;
+            border-radius: 5px;
+        }
+        a {
+            color: purple;
+            text-decoration: none;
+        }
+        .delete-form {
+            display: inline-block;
+        }
+        .delete-button {
+            background-color: purple;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diary Entries</h1>
+        <ul>
+            {% for entry in entries %}
+                <li>
+                    <h3>
+                    {{ entry.title }}
+                    </h3>
+                    {{entry.content}}
+                    <h4>  {{ entry.created_at }}
+                    </h4>
+                    <form method="post" action="{% url 'delete_entry' entry.id %}" class="delete-form">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'create_entry' %}">Create New Entry</a>
+    </div>
+</body>
+</html>
+
